@@ -23,8 +23,6 @@ function TrustBar() {
   const items = [
     { icon: '⚡', title: '60-Minute Delivery', desc: 'Lightning-fast delivery to Bengaluru & Hyderabad' },
     { icon: '↩️', title: 'Free Returns', desc: 'Hassle-free 7-day return policy' },
-    { icon: '🔒', title: 'Secure Payments', desc: 'UPI, Cards, Net Banking — 100% encrypted' },
-    { icon: '✅', title: '100% Genuine', desc: 'Only authentic products, guaranteed' },
   ];
   return (
     <div className="dc-trust-grid dc-container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '24px', padding: '24px 0' }}>
@@ -140,7 +138,6 @@ function CategoryStrip({ active, onSelect }) {
               onSelect(cat.name);
             }}
           >
-            <span className="dc-cat-emoji">{cat.icon}</span>
             {cat.name}
           </button>
         ))}

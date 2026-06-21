@@ -399,11 +399,11 @@ export default function AIStyleRecommendationScreen() {
                       <span style={{ fontSize: 11 }}>JPG, PNG · Max 10MB</span>
                     </div>
                     <div style={{ display: 'flex', gap: 10, justifyContent: 'center' }}>
-                      <label style={{ cursor: 'pointer' }}>
+                      <label style={{ cursor: 'pointer' }} onClick={(e) => e.stopPropagation()}>
                         <input ref={fileRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={e => { if (e.target.files[0]) processFile(e.target.files[0]); }} />
                         <span className="action-btn-text" style={{ padding: '10px 20px', background: '#0A0A0A', color: '#fff', borderRadius: 8, fontSize: 13, fontWeight: 700 }}>📂 From Gallery</span>
                       </label>
-                      <label style={{ cursor: 'pointer' }}>
+                      <label style={{ cursor: 'pointer' }} onClick={(e) => e.stopPropagation()}>
                         <input type="file" accept="image/*" capture="user" style={{ display: 'none' }} onChange={e => { if (e.target.files[0]) processFile(e.target.files[0]); }} />
                         <span className="action-btn-text" style={{ padding: '10px 20px', background: '#F5F5F5', color: '#333', border: '1px solid #DDD', borderRadius: 8, fontSize: 13, fontWeight: 700 }}>📷 Camera</span>
                       </label>

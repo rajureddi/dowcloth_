@@ -215,8 +215,6 @@ export default function ProductDetailScreen() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
               {[
                 { icon: '↩️', text: 'Free 7-day returns' },
-                { icon: '✅', text: '100% genuine product' },
-                { icon: '🔒', text: 'Secure payment' },
                 { icon: '⚡', text: 'Express delivery' },
               ].map(p => (
                 <div key={p.text} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 12px', background: 'var(--dc-surface)', borderRadius: 8, fontSize: 12, color: 'var(--dc-text-secondary)' }}>

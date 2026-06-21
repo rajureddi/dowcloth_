@@ -83,8 +83,8 @@ export default function Header() {
           </button>
 
           {/* Logo */}
-          <div className="dc-logo" onClick={() => navigate('/')}>
-            Dow<span>Cloth</span>
+          <div className="dc-logo" onClick={() => navigate('/')} style={{ display: 'flex', alignItems: 'center', height: '100%', margin: '-15px 0' }}>
+            <img src="/logo.png" alt="DowCloth Logo" style={{ height: '90px', width: 'auto', objectFit: 'contain', mixBlendMode: 'multiply', filter: 'brightness(1.15) contrast(1.1)' }} />
           </div>
 
           {/* Desktop Nav */}
@@ -183,6 +183,9 @@ export default function Header() {
 
           {/* Action Icons */}
           <div className="dc-header-actions">
+            <button className="dc-header-btn" onClick={() => navigate('/ai-style-finder')} title="AI Style Finder">
+              🪄
+            </button>
             <button className="dc-header-btn" onClick={() => navigate('/fashion-assistant')} title="AI Fashion Assistant">
               🤖
             </button>
@@ -203,8 +206,10 @@ export default function Header() {
 
       {/* Mobile Menu Drawer */}
       <div className={`dc-mobile-menu${mobileOpen ? ' open' : ''}`} style={{ zIndex: 700 }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 20px', borderBottom: '1px solid var(--dc-border-light)' }}>
-          <div className="dc-logo" style={{ fontSize: 20 }}>Dow<span>Cloth</span></div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '15px 20px', borderBottom: '1px solid var(--dc-border-light)' }}>
+          <div className="dc-logo" onClick={() => { navigate('/'); setMobileOpen(false); }} style={{ display: 'flex', alignItems: 'center', margin: '-10px 0' }}>
+            <img src="/logo.png" alt="DowCloth Logo" style={{ height: '75px', width: 'auto', objectFit: 'contain', mixBlendMode: 'multiply', filter: 'brightness(1.15) contrast(1.1)' }} />
+          </div>
           <button onClick={() => setMobileOpen(false)} style={{ fontSize: 22, background: 'none', border: 'none', cursor: 'pointer' }}>✕</button>
         </div>
         <div style={{ padding: '16px 0', flex: 1 }}>

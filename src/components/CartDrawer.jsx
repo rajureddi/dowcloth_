@@ -124,7 +124,7 @@ export default function CartDrawer() {
               Proceed to Checkout →
             </button>
             <p style={{ textAlign: 'center', fontSize: 11, color: 'var(--dc-text-muted)', marginTop: 10 }}>
-              🔒 Secure checkout · Free returns · 100% genuine
+              ↩️ Free returns
             </p>
           </div>
         )}
