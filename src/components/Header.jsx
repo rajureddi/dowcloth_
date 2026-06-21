@@ -86,7 +86,7 @@ export default function Header() {
             {/* Logo */}
             <div className="dc-logo" onClick={() => navigate('/')} style={{ display: 'flex', alignItems: 'center', margin: 0 }}>
               <div style={{ height: '60px', width: '180px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <img src="/logo.png" alt="DowCloth Logo" style={{ height: '200px', width: 'auto', objectFit: 'contain', mixBlendMode: 'multiply' }} />
+                <img src="/logo.png?v=3" alt="DowCloth Logo" style={{ height: '160px', width: 'auto', objectFit: 'contain', mixBlendMode: 'multiply' }} />
               </div>
             </div>
           </div>
@@ -171,7 +171,7 @@ export default function Header() {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '15px 20px', borderBottom: '1px solid var(--dc-border-light)' }}>
           <div className="dc-logo" onClick={() => { navigate('/'); setMobileOpen(false); }} style={{ display: 'flex', alignItems: 'center', margin: 0 }}>
             <div style={{ height: '48px', width: '140px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <img src="/logo.png" alt="DowCloth Logo" style={{ height: '160px', width: 'auto', objectFit: 'contain', mixBlendMode: 'multiply' }} />
+              <img src="/logo.png?v=3" alt="DowCloth Logo" style={{ height: '120px', width: 'auto', objectFit: 'contain', mixBlendMode: 'multiply' }} />
             </div>
           </div>
           <button onClick={() => setMobileOpen(false)} style={{ fontSize: 22, background: 'none', border: 'none', cursor: 'pointer' }}>✕</button>

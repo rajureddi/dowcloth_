@@ -110,8 +110,9 @@ class OrderTrackingService {
     ];
 
     // Simulate random status based on order ID
-    const index = parseInt(orderId.slice(-1)) % statuses.length;
-    return statuses[index];
+    const parsed = parseInt(orderId.slice(-1));
+    const index = isNaN(parsed) ? 0 : parsed % statuses.length;
+    return statuses[index] || statuses[0];
   }
 
   /**

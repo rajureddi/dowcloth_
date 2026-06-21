@@ -214,7 +214,7 @@ export default function OrderTrackingScreen() {
 
   const handleOrderUpdate = (data) => {
     setOrderStatus(data);
-    addNotification(`Order status updated: ${data.message}`);
+    addNotification(`Order status updated: ${data?.message || 'Update received'}`);
   };
 
   const handleDriverLocation = (data) => {
@@ -249,7 +249,7 @@ export default function OrderTrackingScreen() {
 
   const getTimelineStatus = (stepKey) => {
     if (!orderStatus) return 'inactive';
-    const currentIndex = statusSteps.findIndex(s => s.key === orderStatus.status);
+    const currentIndex = statusSteps.findIndex(s => s.key === orderStatus?.status);
     const stepIndex = statusSteps.findIndex(s => s.key === stepKey);
     
     if (stepIndex < currentIndex) return 'completed';
@@ -302,12 +302,12 @@ export default function OrderTrackingScreen() {
               
               {orderStatus && (
                 <>
-                  <div style={{...styles.statusBadge, ...getStatusStyle(orderStatus.status)}}>
-                    {orderStatus.icon} {orderStatus.message.toUpperCase()}
+                  <div style={{...styles.statusBadge, ...getStatusStyle(orderStatus?.status)}}>
+                    {orderStatus?.icon} {orderStatus?.message?.toUpperCase()}
                   </div>
                   
                   <div style={styles.progressBar}>
-                    <div style={{...styles.progressFill, width: `${orderStatus.progress}%`}} />
+                    <div style={{...styles.progressFill, width: `${orderStatus?.progress || 0}%`}} />
                   </div>
 
                   <div style={styles.timeline}>
@@ -342,8 +342,8 @@ export default function OrderTrackingScreen() {
                 <div style={styles.driverInfo}>
                   <div style={styles.driverAvatar}>👨</div>
                   <div style={styles.driverDetails}>
-                    <div style={styles.driverName}>{driverLocation.driverName}</div>
-                    <div style={styles.driverVehicle}>{driverLocation.vehicleNumber} • {driverLocation.speed.toFixed(0)} km/h</div>
+                    <div style={styles.driverName}>{driverLocation?.driverName}</div>
+                    <div style={styles.driverVehicle}>{driverLocation?.vehicleNumber} • {driverLocation?.speed?.toFixed(0)} km/h</div>
                   </div>
                 </div>
                 <div style={styles.driverActions}>
@@ -381,7 +381,7 @@ export default function OrderTrackingScreen() {
                   zoom={13}
                 >
                   {/* Origin marker - Warehouse */}
-                  {deliveryRoute && (
+                  {deliveryRoute && deliveryRoute.origin && (
                     <Marker
                       position={{ lat: deliveryRoute.origin.lat, lng: deliveryRoute.origin.lng }}
                       label="📦"
