@@ -224,6 +224,12 @@ export default function Header() {
           >
             ✨ AI Stylist
           </button>
+          <button
+            style={{ display: 'block', width: '100%', textAlign: 'left', padding: '14px 20px', fontSize: 16, fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer', borderBottom: '1px solid var(--dc-border-light)', fontFamily: 'var(--font-body)', color: 'var(--dc-accent)' }}
+            onClick={() => { navigate('/ai-style-finder'); setMobileOpen(false); }}
+          >
+            🪄 Style Finder
+          </button>
         </div>
         <div style={{ padding: '20px' }}>
           <button className="dc-btn dc-btn-primary dc-btn-full" onClick={() => navigate('/order-tracking')}>

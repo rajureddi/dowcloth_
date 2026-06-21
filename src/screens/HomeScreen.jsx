@@ -70,15 +70,15 @@ function HeroCarousel({ banners }) {
             <span className="dc-eyebrow">{b.eyebrow}</span>
             <h1 className="dc-hero-title" style={{ whiteSpace: 'pre-line' }}>{b.title}</h1>
             <p className="dc-hero-subtitle">{b.subtitle}</p>
-            <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
               <button
-                className="dc-btn dc-btn-accent dc-btn-lg"
+                className="dc-btn dc-btn-accent"
                 onClick={() => navigate(`/category/${(b.ctaCategory || '').toLowerCase()}`)}
               >
                 {b.cta}
               </button>
               <button
-                className="dc-btn dc-btn-lg"
+                className="dc-btn"
                 style={{ background: 'rgba(255,255,255,0.15)', color: '#fff', backdropFilter: 'blur(4px)', border: '1px solid rgba(255,255,255,0.3)' }}
                 onClick={() => navigate('/fashion-assistant')}
               >
@@ -198,26 +198,26 @@ function AIFeatures() {
   return (
     <section className="dc-section" style={{ background: '#0A0A0A' }}>
       <div className="dc-container">
-        <div className="dc-section-header" style={{ marginBottom: 48 }}>
+        <div className="dc-section-header" style={{ marginBottom: 32 }}>
           <div style={{ textAlign: 'center', width: '100%' }}>
             <span className="dc-eyebrow" style={{ display: 'block', textAlign: 'center', marginBottom: 8 }}>Powered by AI</span>
             <h2 className="dc-heading-2" style={{ color: '#fff' }}>Fashion Intelligence</h2>
           </div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
+        <div className="dc-ai-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}>
           {features.map(f => (
             <div
               key={f.title}
-              className="dc-hover-lift"
-              style={{ background: f.color, borderRadius: 16, padding: '36px 28px', cursor: 'pointer', border: f.highlight ? '1px solid rgba(201,169,110,0.4)' : '1px solid rgba(255,255,255,0.08)', position: 'relative', overflow: 'hidden' }}
+              className="dc-hover-lift dc-ai-card"
+              style={{ background: f.color, borderRadius: 14, padding: '28px 22px', cursor: 'pointer', border: f.highlight ? '1px solid rgba(201,169,110,0.4)' : '1px solid rgba(255,255,255,0.08)', position: 'relative', overflow: 'hidden' }}
               onClick={() => f.path && navigate(f.path)}
             >
               {f.highlight && (
-                <div style={{ position: 'absolute', top: 14, right: 14, background: '#C9A96E', color: '#0A0A0A', fontSize: 9, fontWeight: 800, letterSpacing: '1px', padding: '3px 8px', borderRadius: 999 }}>NEW ✦</div>
+                <div style={{ position: 'absolute', top: 12, right: 12, background: '#C9A96E', color: '#0A0A0A', fontSize: 9, fontWeight: 800, letterSpacing: '1px', padding: '3px 8px', borderRadius: 999 }}>NEW ✦</div>
               )}
-              <div style={{ fontSize: 44, marginBottom: 20 }}>{f.icon}</div>
-              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 600, color: '#fff', marginBottom: 12 }}>{f.title}</h3>
-              <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.65)', lineHeight: 1.7, marginBottom: 24 }}>{f.desc}</p>
+              <div className="dc-ai-icon" style={{ fontSize: 38, marginBottom: 14 }}>{f.icon}</div>
+              <h3 className="dc-ai-title" style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 600, color: '#fff', marginBottom: 8 }}>{f.title}</h3>
+              <p className="dc-ai-desc" style={{ fontSize: 13, color: 'rgba(255,255,255,0.65)', lineHeight: 1.6, marginBottom: 18 }}>{f.desc}</p>
               <button
                 className="dc-btn dc-btn-sm"
                 style={{ background: f.highlight ? '#C9A96E' : 'rgba(255,255,255,0.15)', color: f.highlight ? '#0A0A0A' : '#fff', border: f.highlight ? 'none' : '1px solid rgba(255,255,255,0.25)', backdropFilter: 'blur(4px)', fontWeight: 700 }}

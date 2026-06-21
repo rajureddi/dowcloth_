@@ -78,7 +78,7 @@ function matchProducts(analysis, gender) {
 function Steps({ current }) {
   const steps = ['Upload Photo', 'AI Analysis', 'Your Picks'];
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0, marginBottom: 40 }}>
+    <div className="steps-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0, marginBottom: 40 }}>
       {steps.map((s, i) => (
         <React.Fragment key={s}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
@@ -95,7 +95,7 @@ function Steps({ current }) {
             <span style={{ fontSize: 11, fontWeight: 600, color: i === current ? '#0A0A0A' : '#999', letterSpacing: '0.5px' }}>{s}</span>
           </div>
           {i < steps.length - 1 && (
-            <div style={{ height: 2, width: 80, background: i < current ? '#C9A96E' : '#EEE', margin: '0 4px', marginBottom: 22, transition: 'background 0.3s' }} />
+            <div className="step-divider" style={{ height: 2, width: 80, background: i < current ? '#C9A96E' : '#EEE', margin: '0 4px', marginBottom: 22, transition: 'background 0.3s' }} />
           )}
         </React.Fragment>
       ))}
@@ -251,7 +251,7 @@ export default function AIStyleRecommendationScreen() {
             ← Back
           </button>
           <div style={{ textAlign: 'center' }}>
-            <div style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 700, color: '#fff', letterSpacing: '-0.3px' }}>
+            <div className="header-title-text" style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 700, color: '#fff', letterSpacing: '-0.3px' }}>
               ✨ AI Style Finder
             </div>
             <div style={{ fontSize: 11, color: '#C9A96E', fontWeight: 600, letterSpacing: '1px', marginTop: 2 }}>
@@ -262,15 +262,15 @@ export default function AIStyleRecommendationScreen() {
         </div>
       </div>
 
-      <div style={{ maxWidth: 1100, margin: '0 auto', padding: '48px 24px' }}>
+      <div className="main-container" style={{ maxWidth: 1100, margin: '0 auto', padding: '48px 24px' }}>
         <Steps current={step} />
 
         {/* ───────── STEP 0: UPLOAD ───────── */}
         {step === 0 && (
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.1fr', gap: 40, alignItems: 'start' }}>
+          <div className="responsive-grid-2" style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 40, alignItems: 'start' }}>
             {/* Left: Controls */}
             <div>
-              <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 32, fontWeight: 700, marginBottom: 12, lineHeight: 1.2 }}>
+              <h1 className="responsive-header" style={{ fontFamily: 'var(--font-display)', fontSize: 32, fontWeight: 700, marginBottom: 12, lineHeight: 1.2 }}>
                 Get Your <span style={{ color: '#C9A96E' }}>Personalized</span><br />Style Recommendations
               </h1>
               <p style={{ fontSize: 15, color: '#555', lineHeight: 1.7, marginBottom: 32 }}>
@@ -290,6 +290,7 @@ export default function AIStyleRecommendationScreen() {
                     <button
                       key={g.id}
                       onClick={() => setGender(g.id)}
+                      className="gender-btn"
                       style={{
                         flex: 1, padding: '16px 8px', borderRadius: 12, cursor: 'pointer',
                         border: `2px solid ${gender === g.id ? '#C9A96E' : '#DDD'}`,
@@ -300,7 +301,7 @@ export default function AIStyleRecommendationScreen() {
                         boxShadow: gender === g.id ? '0 4px 16px rgba(0,0,0,0.18)' : 'none',
                       }}
                     >
-                      <div style={{ fontSize: 30, marginBottom: 6 }}>{g.icon}</div>
+                      <div className="gender-icon" style={{ fontSize: 30, marginBottom: 6 }}>{g.icon}</div>
                       {g.label}
                     </button>
                   ))}
@@ -321,6 +322,7 @@ export default function AIStyleRecommendationScreen() {
                     <button
                       key={bp.id}
                       onClick={() => setBodyPart(bp.id)}
+                      className="bodypart-btn"
                       style={{
                         flex: 1, padding: '14px 8px', borderRadius: 10, cursor: 'pointer',
                         border: `2px solid ${bodyPart === bp.id ? '#0A0A0A' : '#DDD'}`,
@@ -330,7 +332,7 @@ export default function AIStyleRecommendationScreen() {
                         fontFamily: 'var(--font-body)',
                       }}
                     >
-                      <div style={{ fontSize: 24, marginBottom: 4 }}>{bp.icon}</div>
+                      <div className="bodypart-icon" style={{ fontSize: 24, marginBottom: 4 }}>{bp.icon}</div>
                       {bp.label}
                     </button>
                   ))}
@@ -387,8 +389,8 @@ export default function AIStyleRecommendationScreen() {
                     </div>
                   </>
                 ) : (
-                  <div style={{ textAlign: 'center', padding: 32 }}>
-                    <div style={{ fontSize: 56, marginBottom: 16 }}>📸</div>
+                  <div className="upload-empty-state" style={{ textAlign: 'center', padding: 32 }}>
+                    <div className="upload-icon" style={{ fontSize: 56, marginBottom: 16 }}>📸</div>
                     <div style={{ fontSize: 16, fontWeight: 700, marginBottom: 8 }}>
                       {dragging ? 'Drop your photo here!' : 'Upload Your Photo'}
                     </div>
@@ -399,11 +401,11 @@ export default function AIStyleRecommendationScreen() {
                     <div style={{ display: 'flex', gap: 10, justifyContent: 'center' }}>
                       <label style={{ cursor: 'pointer' }}>
                         <input ref={fileRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={e => { if (e.target.files[0]) processFile(e.target.files[0]); }} />
-                        <span style={{ padding: '10px 20px', background: '#0A0A0A', color: '#fff', borderRadius: 8, fontSize: 13, fontWeight: 700 }}>📂 From Gallery</span>
+                        <span className="action-btn-text" style={{ padding: '10px 20px', background: '#0A0A0A', color: '#fff', borderRadius: 8, fontSize: 13, fontWeight: 700 }}>📂 From Gallery</span>
                       </label>
                       <label style={{ cursor: 'pointer' }}>
                         <input type="file" accept="image/*" capture="user" style={{ display: 'none' }} onChange={e => { if (e.target.files[0]) processFile(e.target.files[0]); }} />
-                        <span style={{ padding: '10px 20px', background: '#F5F5F5', color: '#333', border: '1px solid #DDD', borderRadius: 8, fontSize: 13, fontWeight: 700 }}>📷 Camera</span>
+                        <span className="action-btn-text" style={{ padding: '10px 20px', background: '#F5F5F5', color: '#333', border: '1px solid #DDD', borderRadius: 8, fontSize: 13, fontWeight: 700 }}>📷 Camera</span>
                       </label>
                     </div>
                   </div>
@@ -496,7 +498,7 @@ export default function AIStyleRecommendationScreen() {
               </button>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '340px 1fr', gap: 32, marginBottom: 48 }}>
+            <div className="responsive-grid-2" style={{ display: 'grid', gridTemplateColumns: '340px 1fr', gap: 32, marginBottom: 48 }}>
               {/* Left: Photo + quick cards */}
               <div>
                 {imagePreview && (
@@ -532,7 +534,7 @@ export default function AIStyleRecommendationScreen() {
                 )}
 
                 {/* Skin Tone + Body Type */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                <div className="responsive-grid-cards" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
                   <div style={{ background: '#fff', borderRadius: 12, padding: '18px', border: '1px solid #EEE' }}>
                     <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '1.5px', color: '#888', marginBottom: 12 }}>SKIN TONE</div>
                     <SkinToneChip hex={analysis.skinTone?.hex || '#D2A679'} label={analysis.skinTone?.label || 'Wheatish'} />
@@ -562,7 +564,7 @@ export default function AIStyleRecommendationScreen() {
                 </div>
 
                 {/* Fits */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                <div className="responsive-grid-cards" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
                   <div style={{ background: '#fff', borderRadius: 12, padding: '18px', border: '1px solid #EEE' }}>
                     <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '1.5px', color: '#888', marginBottom: 12 }}>✓ RECOMMENDED FITS</div>
                     {(analysis.styleProfile?.recommended_fits || []).map(f => (
@@ -627,6 +629,25 @@ export default function AIStyleRecommendationScreen() {
         }
         @keyframes fade-pulse {
           0%, 100% { opacity: 0.3; } 50% { opacity: 1; }
+        }
+        @media (max-width: 768px) {
+          .main-container { padding: 24px 16px !important; }
+          .responsive-grid-2 { grid-template-columns: 1fr !important; gap: 24px !important; }
+          .responsive-grid-cards { grid-template-columns: 1fr !important; gap: 16px !important; }
+          .responsive-header { font-size: 22px !important; margin-bottom: 8px !important; }
+          .step-divider { width: 30px !important; margin-bottom: 18px !important; }
+          .header-title-text { font-size: 16px !important; }
+          .steps-container { margin-bottom: 24px !important; }
+          .gender-btn { padding: 10px 4px !important; font-size: 13px !important; }
+          .gender-icon { font-size: 22px !important; margin-bottom: 4px !important; }
+          .bodypart-btn { padding: 8px 4px !important; font-size: 11px !important; }
+          .bodypart-icon { font-size: 18px !important; margin-bottom: 2px !important; }
+          .upload-empty-state { padding: 20px !important; }
+          .upload-icon { font-size: 40px !important; margin-bottom: 12px !important; }
+          .action-btn-text { font-size: 12px !important; padding: 8px 12px !important; }
+        }
+        @media (min-width: 769px) and (max-width: 1024px) {
+          .responsive-grid-2 { gap: 24px !important; }
         }
       `}</style>
     </div>
