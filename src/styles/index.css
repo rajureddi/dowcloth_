@@ -16,9 +16,9 @@
   --dc-border-light:   #F0F0EC;
 
   /* Accent */
-  --dc-accent:         #C9A96E;
-  --dc-accent-light:   #E8D4B0;
-  --dc-accent-dark:    #A07840;
+  --dc-accent:         #1D4ED8; /* Premium Royal Blue */
+  --dc-accent-light:   #DBEAFE;
+  --dc-accent-dark:    #1E3A8A;
 
   /* Semantic */
   --dc-red:            #D93025;
@@ -516,7 +516,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   font-size: 22px;
   font-weight: 700;
-  color: var(--dc-black);
+  color: var(--dc-accent);
   letter-spacing: -0.5px;
   cursor: pointer;
   white-space: nowrap;

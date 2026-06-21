@@ -239,108 +239,108 @@ class FashionAssistantService {
   }
 
   /**
-   * Get smart response based on user query
+   * Get smart response based on user query using Gemini AI
    */
   async getSmartResponse(query, context = {}) {
     const q = query.toLowerCase();
     const { product } = context;
 
-    // Greetings
-    if (q.match(/^(hello|hi|hey|namaste)/)) {
-      return this.translate('Hello! 👋 I\'m your AI Fashion Assistant. How can I help you today?', this.currentLanguage);
-    }
-
-    // Skin tone recommendations
-    if (q.includes('skin tone') || q.includes('skin') || q.includes('complexion') || q.includes('my color')) {
-      const skinTone = skinToneDetectionService.getCurrentSkinTone();
-      if (skinTone) {
-        const recommendations = this.getSkinToneBasedRecommendations(skinTone);
-        return {
-          type: 'skin_tone_recommendations',
-          message: this.translate(`Based on your ${skinTone.category} skin tone, here are perfect color matches for you! 🎨`, this.currentLanguage),
-          products: recommendations,
-          skinTone: skinTone
-        };
-      } else {
-        return {
-          type: 'skin_tone_prompt',
-          message: this.translate('I can provide personalized color recommendations based on your skin tone! Please upload a photo in the Skin Tone Analysis section first, or try general outfit suggestions. 📸', this.currentLanguage)
-        };
-      }
-    }
-
-    // Outfit suggestions
-    if (q.includes('outfit') || q.includes('suggest') || q.includes('recommend')) {
-      // Check if user has skin tone data for better recommendations
-      const skinTone = skinToneDetectionService.getCurrentSkinTone();
-      if (skinTone && !q.includes('men') && !q.includes('women')) {
-        const skinToneRecommendations = this.getSkinToneBasedRecommendations(skinTone);
-        return {
-          type: 'skin_tone_outfit_suggestions',
-          message: this.translate(`Based on your ${skinTone.category} skin tone, here are outfit suggestions that will look great on you! ✨`, this.currentLanguage),
-          products: skinToneRecommendations,
-          skinTone: skinTone
-        };
-      }
-
-      const suggestions = this.suggestOutfits({
-        category: q.includes('men') ? 'men' : q.includes('women') ? 'women' : 'all',
-        style: q.includes('casual') ? 'casual' : q.includes('formal') ? 'formal' : q.includes('ethnic') ? 'ethnic' : 'casual'
-      });
-      return {
-        type: 'outfit_suggestions',
-        message: this.translate('Here are some outfit suggestions for you! ✨', this.currentLanguage),
-        products: suggestions
-      };
-    }
-
-    // Color matching
-    if (q.includes('color') || q.includes('match') || q.includes('combine')) {
-      if (product) {
-        const matches = this.recommendMatchingColors(product);
-        return {
-          type: 'color_matches',
-          message: this.translate(`These colors would look great with ${product.name}! 🎨`, this.currentLanguage),
-          products: matches
-        };
-      }
-    }
-
-    // Product-specific questions
+    let enhancedQuery = query;
     if (product) {
-      const answer = this.answerProductQuestion(query, product);
-      return {
-        type: 'product_answer',
-        message: this.translate(answer, this.currentLanguage)
-      };
+      enhancedQuery += `\n(System Note: The user is currently viewing the product: ${product.name}, Category: ${product.category}, Price: ₹${product.price})`;
+    }
+    const skinTone = skinToneDetectionService.getCurrentSkinTone();
+    if (skinTone) {
+      enhancedQuery += `\n(System Note: The user's skin tone is detected as '${skinTone.category}'. If recommending colors, suggest things like ${skinTone.bestColors.join(', ')}.)`;
     }
 
-    // Personalized recommendations
-    if (q.includes('recommend') || q.includes('personalized') || q.includes('for me')) {
-      // First try skin tone recommendations
-      const skinTone = skinToneDetectionService.getCurrentSkinTone();
-      if (skinTone) {
-        const skinToneRecommendations = this.getSkinToneBasedRecommendations(skinTone);
-        return {
-          type: 'skin_tone_personalized',
-          message: this.translate(`Based on your ${skinTone.category} skin tone and preferences, here are personalized picks for you! 💫`, this.currentLanguage),
-          products: skinToneRecommendations,
-          skinTone: skinTone
-        };
+    // Prepare messages array for Gemini
+    // User history is stored as an array of { action, context: { question } }. 
+    // We only want the recent chat history.
+    const chatHistory = this.userHistory
+      .filter(entry => entry.action === 'chat_question' || entry.action === 'chat_response')
+      .slice(-6); // last 6 turns
+
+    const messages = chatHistory.map(m => ({
+      role: m.action === 'chat_question' ? 'user' : 'model',
+      content: m.context.question || m.context.response || ''
+    }));
+
+    messages.push({ role: 'user', content: enhancedQuery });
+
+    let aiMessage = "I'm having trouble connecting right now.";
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          messages: messages, 
+          context: { language: this.currentLanguage } 
+        })
+      });
+      
+      if (res.ok) {
+        const data = await res.json();
+        aiMessage = data.message;
+        
+        // Save the bot's response to history so context is retained
+        this.saveToHistory('chat_response', null, { response: aiMessage });
       }
-
-      const recommendations = this.getPersonalizedRecommendations();
-      return {
-        type: 'personalized',
-        message: this.translate('Based on your browsing history, here are some picks for you! 💫', this.currentLanguage),
-        products: recommendations
-      };
+    } catch(err) {
+      console.error("AI Chat Error:", err);
+      aiMessage = this.translate('I am experiencing network issues connecting to my AI brain. Please try again later.', this.currentLanguage);
     }
 
-    // Default response
+    // Optionally append products if they asked for suggestions
+    let products = [];
+    if (q.includes('outfit') || q.includes('suggest') || q.includes('recommend') || q.includes('color') || q.includes('wear') || q.includes('dress') || q.includes('shirt') || q.includes('wedding')) {
+       // If user asked about colors specifically against a product, try matching colors
+       if (q.includes('color') && product) {
+          products = this.recommendMatchingColors(product);
+       } else {
+          // SMART KEYWORD MATCHER:
+          // Combine user query and AI response for keywords (lowercased)
+          const textToMatch = (q + " " + aiMessage.toLowerCase()).replace(/[^\w\s-]/g, ' ');
+          const keywords = textToMatch.split(/\s+/).filter(w => w.length > 3); // words longer than 3 chars
+          
+          // Calculate a relevance score for each product in our local catalog
+          const scoredProducts = PRODUCTS.map(p => {
+             let score = 0;
+             const pText = `${p.name} ${p.category} ${p.subCategory} ${p.description} ${(p.tags||[]).join(' ')}`.toLowerCase();
+             
+             // Strong gender enforcement
+             if (q.includes('men') && !q.includes('women') && p.category.toLowerCase() !== 'men') score -= 100;
+             if ((q.includes('women') || q.includes('girl')) && p.category.toLowerCase() !== 'women') score -= 100;
+
+             // Match keywords
+             keywords.forEach(kw => {
+                // exact match gets higher score
+                if (pText.includes(` ${kw} `)) score += 3;
+                else if (pText.includes(kw)) score += 1;
+             });
+             
+             return { product: p, score };
+          });
+
+          // Sort by score and take top matches
+          scoredProducts.sort((a, b) => b.score - a.score);
+          // Only take products with a positive score
+          products = scoredProducts.filter(sp => sp.score > 0).slice(0, 4).map(sp => sp.product);
+
+          // Fallback if no smart matches were found
+          if (products.length === 0) {
+             products = this.suggestOutfits({
+                category: q.includes('men') && !q.includes('women') ? 'men' : q.includes('women') ? 'women' : 'all',
+                style: q.includes('casual') ? 'casual' : q.includes('formal') ? 'formal' : q.includes('ethnic') || q.includes('wedding') ? 'ethnic' : 'casual'
+             });
+          }
+       }
+    }
+
     return {
-      type: 'general',
-      message: this.translate('I can help you with outfit suggestions, color recommendations, product questions, and personalized picks. What would you like to know? 🤔', this.currentLanguage)
+      type: products.length ? 'outfit_suggestions' : 'ai_response',
+      message: aiMessage,
+      products: products
     };
   }
 

@@ -83,7 +83,7 @@ export default function Header() {
           </button>
 
           {/* Logo */}
-          <div className="dc-logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
+          <div className="dc-logo" onClick={() => navigate('/')}>
             Dow<span>Cloth</span>
           </div>
 
