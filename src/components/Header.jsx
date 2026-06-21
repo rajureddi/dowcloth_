@@ -153,7 +153,7 @@ export default function Header() {
               🪄
             </button>
             <button className="dc-header-btn" onClick={() => navigate('/fashion-assistant')} title="AI Fashion Assistant">
-              <img src="/Chatbot.png" alt="Chatbot" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
+              <img src="/chat.png?v=3" alt="Chatbot" style={{ width: '50px', height: '50px', objectFit: 'contain', position: 'absolute', transform: 'scale(1.2)' }} />
             </button>
             <button className="dc-header-btn" onClick={() => setIsOpen(true)} title="Shopping Cart">
               <img src="/Cart.png" alt="Cart" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
