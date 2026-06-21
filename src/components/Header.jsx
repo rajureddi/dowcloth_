@@ -77,16 +77,16 @@ export default function Header() {
 
       <header className={`dc-header${scrolled ? ' scrolled' : ''}`}>
         <div className="dc-header-inner">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
             {/* Hamburger (mobile) */}
             <button className="dc-hamburger" onClick={() => setMobileOpen(true)} aria-label="Menu">
               <span /><span /><span />
             </button>
 
             {/* Logo */}
-            <div className="dc-logo" onClick={() => navigate('/')} style={{ display: 'flex', alignItems: 'center', margin: 0 }}>
-              <div style={{ height: '60px', width: '180px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <img src="/logo.png?v=3" alt="DowCloth Logo" style={{ height: '160px', width: 'auto', objectFit: 'contain', mixBlendMode: 'multiply' }} />
+            <div className="dc-logo" onClick={() => navigate('/')} style={{ display: 'flex', alignItems: 'center', margin: 0, marginLeft: '-15px' }}>
+              <div style={{ height: '60px', width: '180px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <img src="/logo.png?v=3" alt="DowCloth Logo" style={{ height: '160px', width: 'auto', objectFit: 'contain', mixBlendMode: 'multiply', transform: 'translateX(-10px)' }} />
               </div>
             </div>
           </div>
