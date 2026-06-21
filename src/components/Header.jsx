@@ -77,14 +77,18 @@ export default function Header() {
 
       <header className={`dc-header${scrolled ? ' scrolled' : ''}`}>
         <div className="dc-header-inner">
-          {/* Hamburger (mobile) */}
-          <button className="dc-hamburger" onClick={() => setMobileOpen(true)} aria-label="Menu">
-            <span /><span /><span />
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            {/* Hamburger (mobile) */}
+            <button className="dc-hamburger" onClick={() => setMobileOpen(true)} aria-label="Menu">
+              <span /><span /><span />
+            </button>
 
-          {/* Logo */}
-          <div className="dc-logo" onClick={() => navigate('/')} style={{ display: 'flex', alignItems: 'center', height: '100%', margin: '-15px 0' }}>
-            <img src="/logo.png" alt="DowCloth Logo" style={{ height: '90px', width: 'auto', objectFit: 'contain', mixBlendMode: 'multiply', filter: 'brightness(1.15) contrast(1.1)' }} />
+            {/* Logo */}
+            <div className="dc-logo" onClick={() => navigate('/')} style={{ display: 'flex', alignItems: 'center', margin: 0 }}>
+              <div style={{ height: '60px', width: '180px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <img src="/logo.png" alt="DowCloth Logo" style={{ height: '200px', width: 'auto', objectFit: 'contain', mixBlendMode: 'multiply' }} />
+              </div>
+            </div>
           </div>
 
           {/* Desktop Nav */}
@@ -143,58 +147,16 @@ export default function Header() {
             </button>
           </nav>
 
-          {/* Search Bar (desktop) */}
-          <form className="dc-search-bar" onSubmit={handleSearchSubmit} style={{ position: 'relative' }}>
-            <span className="dc-search-icon">🔍</span>
-            <input
-              ref={searchRef}
-              className="dc-search-input"
-              placeholder="Search clothes, brands..."
-              value={searchQuery}
-              onChange={e => { setSearchQuery(e.target.value); setSearchOpen(true); }}
-              onFocus={() => setSearchOpen(true)}
-              onBlur={() => setTimeout(() => setSearchOpen(false), 200)}
-            />
-            {searchOpen && searchResults.length > 0 && (
-              <div style={{
-                position: 'absolute', top: '100%', left: 0, right: 0,
-                background: '#fff', borderRadius: 12, boxShadow: 'var(--shadow-xl)',
-                border: '1px solid var(--dc-border-light)', zIndex: 700, overflow: 'hidden',
-                marginTop: 6,
-              }}>
-                {searchResults.map(p => (
-                  <div
-                    key={p.id}
-                    style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 16px', cursor: 'pointer', transition: 'background 0.15s' }}
-                    onMouseDown={() => navigate(`/product/${p.id}`)}
-                    onMouseEnter={e => e.currentTarget.style.background = 'var(--dc-surface)'}
-                    onMouseLeave={e => e.currentTarget.style.background = 'none'}
-                  >
-                    <img src={p.image} alt={p.name} style={{ width: 36, height: 48, objectFit: 'cover', borderRadius: 4, flexShrink: 0 }} />
-                    <div>
-                      <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1A1A' }}>{p.name}</div>
-                      <div style={{ fontSize: 11, color: 'var(--dc-text-muted)' }}>{p.brand} · ₹{p.price.toLocaleString()}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </form>
-
           {/* Action Icons */}
           <div className="dc-header-actions">
             <button className="dc-header-btn" onClick={() => navigate('/ai-style-finder')} title="AI Style Finder">
               🪄
             </button>
             <button className="dc-header-btn" onClick={() => navigate('/fashion-assistant')} title="AI Fashion Assistant">
-              🤖
-            </button>
-            <button className="dc-header-btn" onClick={() => navigate('/wishlist')} title="Wishlist">
-              🤍
-              {wishlistCount > 0 && <span className="dc-badge-count">{wishlistCount}</span>}
+              <img src="/Chatbot.png" alt="Chatbot" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
             </button>
             <button className="dc-header-btn" onClick={() => setIsOpen(true)} title="Shopping Cart">
-              🛍️
+              <img src="/Cart.png" alt="Cart" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
               {totalItems > 0 && <span className="dc-badge-count" style={{ background: 'var(--dc-red)' }}>{totalItems}</span>}
             </button>
           </div>
@@ -207,8 +169,10 @@ export default function Header() {
       {/* Mobile Menu Drawer */}
       <div className={`dc-mobile-menu${mobileOpen ? ' open' : ''}`} style={{ zIndex: 700 }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '15px 20px', borderBottom: '1px solid var(--dc-border-light)' }}>
-          <div className="dc-logo" onClick={() => { navigate('/'); setMobileOpen(false); }} style={{ display: 'flex', alignItems: 'center', margin: '-10px 0' }}>
-            <img src="/logo.png" alt="DowCloth Logo" style={{ height: '75px', width: 'auto', objectFit: 'contain', mixBlendMode: 'multiply', filter: 'brightness(1.15) contrast(1.1)' }} />
+          <div className="dc-logo" onClick={() => { navigate('/'); setMobileOpen(false); }} style={{ display: 'flex', alignItems: 'center', margin: 0 }}>
+            <div style={{ height: '48px', width: '140px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <img src="/logo.png" alt="DowCloth Logo" style={{ height: '160px', width: 'auto', objectFit: 'contain', mixBlendMode: 'multiply' }} />
+            </div>
           </div>
           <button onClick={() => setMobileOpen(false)} style={{ fontSize: 22, background: 'none', border: 'none', cursor: 'pointer' }}>✕</button>
         </div>
